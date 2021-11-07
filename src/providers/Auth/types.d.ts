@@ -7,6 +7,7 @@ export interface AuthProviderData {
   setFailMessage: Dispatch<SetStateAction<string>>;
   setLogin: (credentials: Credentials) => void;
   setLogout: () => void;
+  setSignUp: (credentials: Credentials) => void;
 }
 
 export interface Response {

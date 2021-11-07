@@ -17,13 +17,22 @@ export const Container = styled(MuiContainer)<ContainerProps>(({ theme }) => ({
 
   [theme.breakpoints.up("md")]: {
     maxWidth: "500px",
-    margin: `52px 70px 0 0`,
+    margin: `52px 0 0 70px`,
   },
 }));
 
-export const Title = styled(Typography)<TypographyProps>(({ theme }) => ({
+export const TitleWrapper = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
   marginBottom: theme.spacing(3),
+}));
+
+export const Title = styled(Typography)<TypographyProps>(({ theme }) => ({
   color: theme.palette.grey[600],
+}));
+
+export const LoginLink = styled(Typography)<TypographyProps>(({ theme }) => ({
+  color: theme.palette.grey[300],
 }));
 
 export const FormInput = styled(TextField)<TextFieldProps>(({ theme }) => ({
@@ -31,13 +40,5 @@ export const FormInput = styled(TextField)<TextFieldProps>(({ theme }) => ({
 }));
 
 export const FormButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  marginBottom: theme.spacing(3),
-}));
-
-export const Message = styled(Typography)<TypographyProps>(({ theme }) => ({
-  maxWidth: "250px",
-  margin: "0 auto",
-  textAlign: "center",
-  color: theme.palette.grey[200],
   marginBottom: theme.spacing(3),
 }));

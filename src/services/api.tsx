@@ -16,3 +16,9 @@ export const postLogin = (data: Credentials): Promise<any> => {
 
   return genericPost({ url, data });
 };
+
+export const postSignUp = (data: Credentials): Promise<any> => {
+  const url = "/signup";
+
+  return genericPost({ url, data });
+};

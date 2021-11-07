@@ -1,8 +1,16 @@
+import Banner from "../../components/Banner";
+import SignUpForm from "../../components/SignUpForm";
+import { BannerWrapper, Container } from "./styles";
+
 const SignUp = (): JSX.Element => {
   return (
-    <>
-      <h1>SignUp</h1>
-    </>
+    <Container>
+      <BannerWrapper>
+        <Banner />
+      </BannerWrapper>
+
+      <SignUpForm />
+    </Container>
   );
 };
 

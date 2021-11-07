@@ -76,8 +76,10 @@ const theme: Theme = createTheme({
     },
     body1: {
       fontFamily: "'Inter', sans-serif",
+      fontStyle: "normal",
       fontSize: "14px",
-      fontWeight: 400,
+      fontWeight: 500,
+      lineHeight: "22px",
     },
     body2: {
       fontFamily: "'Inter', sans-serif",

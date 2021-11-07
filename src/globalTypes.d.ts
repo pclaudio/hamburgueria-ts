@@ -5,8 +5,11 @@ export interface NodeProps {
 }
 
 export interface Credentials {
+  name?: string;
   email: string;
   password: string;
+  passwordConfirmation?: string;
+  role?: string;
 }
 
 export interface User {

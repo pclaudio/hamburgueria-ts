@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { postLogin } from "../../services/api";
+import { postLogin, postSignUp } from "../../services/api";
 import { Credentials, NodeProps, User } from "../../globalTypes";
 import { AuthProviderData, Response } from "./types";
 import { useUser } from "../User";
@@ -42,21 +42,25 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
     return translatedMessage;
   };
 
+  const setResponse = (response: Response): void => {
+    localStorage.setItem("@BK/token", response.data.accessToken);
+    localStorage.setItem("@BK/user", JSON.stringify(response.data.user));
+    setAuthToken(response.data.accessToken);
+    setUser(response.data.user);
+    response.data.user.role === "administrador"
+      ? history.push("/dashboard")
+      : history.push("/shop");
+  };
+
+  const setError = (error: Response): void => {
+    const message: string = translateMessage(error.response.data);
+    setFailMessage(message);
+  };
+
   const setLogin = (credentials: Credentials): void => {
     postLogin(credentials)
-      .then((response: Response) => {
-        localStorage.setItem("@BK/token", response.data.accessToken);
-        localStorage.setItem("@BK/user", JSON.stringify(response.data.user));
-        setAuthToken(response.data.accessToken);
-        setUser(response.data.user);
-        response.data.user.role === "administrador"
-          ? history.push("/dashboard")
-          : history.push("/shop");
-      })
-      .catch((error: Response) => {
-        const message: string = translateMessage(error.response.data);
-        setFailMessage(message);
-      });
+      .then((response: Response) => setResponse(response))
+      .catch((error: Response) => setError(error));
   };
 
   const setLogout = (): void => {
@@ -67,9 +71,24 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
     history.push("/");
   };
 
+  const setSignUp = (credentials: Credentials): void => {
+    const { name, email, password } = credentials;
+
+    postSignUp({ name, email, password, role: "usuario" })
+      .then((response: Response) => setResponse(response))
+      .catch((error: Response) => setError(error));
+  };
+
   return (
     <AuthContext.Provider
-      value={{ authToken, failMessage, setFailMessage, setLogin, setLogout }}
+      value={{
+        authToken,
+        failMessage,
+        setFailMessage,
+        setLogin,
+        setLogout,
+        setSignUp,
+      }}
     >
       {children}
     </AuthContext.Provider>
