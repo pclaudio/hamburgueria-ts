@@ -12,7 +12,7 @@ const Routes = (): JSX.Element => {
         <Login />
       </Route>
 
-      <Route path="/signup" isPrivate>
+      <Route path="/signup">
         <SignUp />
       </Route>
 

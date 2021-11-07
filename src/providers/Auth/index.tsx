@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { postLogin } from "../../services/api";
-import { Credentials, NodeProps } from "../../globalTypes";
+import { Credentials, NodeProps, User } from "../../globalTypes";
 import { AuthProviderData, Response } from "./types";
 import { useUser } from "../User";
 
@@ -60,8 +60,10 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
   };
 
   const setLogout = (): void => {
-    localStorage.clear();
+    localStorage.removeItem("@BK/token");
+    localStorage.removeItem("@BK/user");
     setAuthToken("");
+    setUser({} as User);
     history.push("/");
   };
 
