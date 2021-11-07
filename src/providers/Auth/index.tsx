@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
 
   const [failMessage, setFailMessage] = useState<string>("");
 
+  const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
+
   const { setUser } = useUser();
 
   const translateMessage = (origianlMessage: string): string => {
@@ -47,6 +49,9 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
     localStorage.setItem("@BK/user", JSON.stringify(response.data.user));
     setAuthToken(response.data.accessToken);
     setUser(response.data.user);
+
+    setOpenBackdrop(false);
+
     response.data.user.role === "administrador"
       ? history.push("/dashboard")
       : history.push("/shop");
@@ -54,10 +59,15 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
 
   const setError = (error: Response): void => {
     const message: string = translateMessage(error.response.data);
+
+    setOpenBackdrop(false);
+
     setFailMessage(message);
   };
 
   const setLogin = (credentials: Credentials): void => {
+    setOpenBackdrop(true);
+
     postLogin(credentials)
       .then((response: Response) => setResponse(response))
       .catch((error: Response) => setError(error));
@@ -74,6 +84,8 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
   const setSignUp = (credentials: Credentials): void => {
     const { name, email, password } = credentials;
 
+    setOpenBackdrop(true);
+
     postSignUp({ name, email, password, role: "usuario" })
       .then((response: Response) => setResponse(response))
       .catch((error: Response) => setError(error));
@@ -85,6 +97,7 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
         authToken,
         failMessage,
         setFailMessage,
+        openBackdrop,
         setLogin,
         setLogout,
         setSignUp,

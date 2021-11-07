@@ -5,6 +5,7 @@ export interface AuthProviderData {
   authToken: string;
   failMessage: string;
   setFailMessage: Dispatch<SetStateAction<string>>;
+  openBackdrop: boolean;
   setLogin: (credentials: Credentials) => void;
   setLogout: () => void;
   setSignUp: (credentials: Credentials) => void;
