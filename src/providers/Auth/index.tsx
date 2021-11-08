@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { postLogin, postSignUp } from "../../services/api";
+import jwt_decode, { JwtPayload } from "jwt-decode";
 import { Credentials, NodeProps, User } from "../../globalTypes";
 import { AuthProviderData, Response } from "./types";
 import { useUser } from "../User";
@@ -10,9 +11,22 @@ const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
 export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
   const history = useHistory();
 
-  const [authToken, setAuthToken] = useState<string>(
-    (): string => localStorage.getItem("@BK/token") || ""
-  );
+  const [authToken, setAuthToken] = useState<string>((): string => {
+    const token: string = localStorage.getItem("@BK/token") || "";
+
+    const expiration: number =
+      (!!token && jwt_decode<JwtPayload>(token).exp) || 0;
+
+    const isExpired = Date.now() >= expiration * 1000;
+
+    if (isExpired) {
+      localStorage.removeItem("BK/token");
+      localStorage.removeItem("BK/user");
+      return "";
+    }
+
+    return token;
+  });
 
   const [failMessage, setFailMessage] = useState<string>("");
 
