@@ -1,4 +1,6 @@
 import { Delete } from "@mui/icons-material";
+import { CardCartProps } from "./types";
+import { useCart } from "../../providers/Cart";
 import { CardMedia } from "@mui/material";
 import {
   Box,
@@ -13,31 +15,42 @@ import {
   Title,
 } from "./styles";
 
-const CardCart = (): JSX.Element => {
+const CardCart = ({ product }: CardCartProps): JSX.Element => {
+  const image: string = `/assets/images/${product.category}.png`;
+
+  const {
+    increaseProductQuantity,
+    decreaseProductQuantity,
+    removeProductFromCart,
+  } = useCart();
+
   return (
     <CardContainer>
       <CardMediaRoot>
-        <CardMedia
-          component="img"
-          image="/assets/images/hamburguer.png"
-          alt="Hamburguer"
-        />
+        <CardMedia component="img" image={image} alt="Kenzie Burguer Product" />
       </CardMediaRoot>
 
       <CardContent>
-        <Title variant="h3">Heading3</Title>
+        <Title variant="h3">{product.title}</Title>
 
         <ControlContainer>
-          <ControlButton>-</ControlButton>
-          <ControlCounter>1</ControlCounter>
-          <ControlButton>+</ControlButton>
+          <ControlButton onClick={() => decreaseProductQuantity(product.id)}>
+            -
+          </ControlButton>
+          <ControlCounter>{product.quantity}</ControlCounter>
+          <ControlButton onClick={() => increaseProductQuantity(product.id)}>
+            +
+          </ControlButton>
         </ControlContainer>
       </CardContent>
 
       <Box />
 
       <CardActions>
-        <IconButton size="large">
+        <IconButton
+          size="large"
+          onClick={() => removeProductFromCart(product.id)}
+        >
           <Delete fontSize="medium" />
         </IconButton>
       </CardActions>

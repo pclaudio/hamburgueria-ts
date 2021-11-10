@@ -18,6 +18,7 @@ export const CardContainer = styled(Card)<CardProps>(({ theme }) => ({
   display: "flex",
   borderRadius: 0,
   boxShadow: "none",
+  marginBottom: theme.spacing(2),
 }));
 
 export const CardMediaRoot = styled("div")(({ theme }) => ({

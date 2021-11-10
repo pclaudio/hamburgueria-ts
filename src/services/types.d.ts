@@ -1,4 +1,10 @@
-export interface GenericPostProps {
+export interface ApiProps {
   url: string;
-  data: object;
+  data?: object;
+}
+
+export interface HeadersProps {
+  headers: {
+    Authorization: string;
+  };
 }

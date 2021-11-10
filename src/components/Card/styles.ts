@@ -14,7 +14,7 @@ import {
 import Button from "../Button";
 
 export const CardContainer = styled(Card)<CardProps>(({ theme }) => ({
-  maxWidth: "300px",
+  width: "300px",
   borderWidth: "2px",
   borderStyle: "solid",
   borderColor: theme.palette.grey[100],

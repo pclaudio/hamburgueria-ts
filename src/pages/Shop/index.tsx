@@ -1,7 +1,15 @@
+import AppBar from "../../components/AppBar";
+import Products from "../../components/Products";
+import CartModal from "../../components/CartModal";
+
 const Shop = (): JSX.Element => {
   return (
     <>
-      <h1>Shop</h1>
+      <AppBar />
+
+      <Products />
+
+      <CartModal />
     </>
   );
 };

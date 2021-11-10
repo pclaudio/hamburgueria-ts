@@ -18,3 +18,18 @@ export interface User {
   role: string;
   id: number;
 }
+
+export interface Product {
+  id: number;
+  userId: number;
+  title: string;
+  category: "hamburgueres" | "bebidas" | "acompanhamentos" | "sobremesas";
+  price: number;
+  quantity: number;
+}
+
+export interface Cart {
+  id?: number;
+  userId?: number;
+  products: Product[];
+}

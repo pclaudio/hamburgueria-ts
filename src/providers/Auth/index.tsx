@@ -2,9 +2,10 @@ import { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { postLogin, postSignUp } from "../../services/api";
 import jwt_decode, { JwtPayload } from "jwt-decode";
-import { Credentials, NodeProps, User } from "../../globalTypes";
+import { Cart, Credentials, NodeProps, User } from "../../globalTypes";
 import { AuthProviderData, Response } from "./types";
 import { useUser } from "../User";
+import { useCart } from "../Cart";
 
 const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
 
@@ -33,6 +34,8 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
   const [openBackdrop, setOpenBackdrop] = useState<boolean>(false);
 
   const { setUser } = useUser();
+
+  const { setCart } = useCart();
 
   const translateMessage = (origianlMessage: string): string => {
     let translatedMessage = "";
@@ -92,6 +95,7 @@ export const AuthProvider = ({ children }: NodeProps): JSX.Element => {
     localStorage.removeItem("@BK/user");
     setAuthToken("");
     setUser({} as User);
+    setCart({} as Cart);
     history.push("/");
   };
 
